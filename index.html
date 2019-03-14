@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <title>UpGrade</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="heading">Phone Directory</h1>
+    <div class="row">
+      <p id="upgrade">
+        <div class="col-sm-9 col-md-6 col-lg-8">
+          <table class="table table-bordered" id="table">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Contact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Saurabh</td>
+                <td>Kumar</td>
+                <td>8798789</td>
+              </tr>
+              <tr>
+                <td>Gaurav</td>
+                <td>Kumar</td>
+                <td>8989789</td>
+              </tr>
+              <tr>
+                <td>Rakhi</td>
+                <td>Kumar</td>
+                <td>8798798</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+        </div>
+        <div class="col-sm-3 col-md-6 col-lg-4">
+          <div class="card tab tab-2">
+            <h2 class="secondheading">Add Subscriber</h2>
+            <hr>
+            <div ng-app="">
+              <div class="text-center">
+                  <input type="text" name="fname" id="fname" ng-model="fname" placeholder="First name">
+                  <input type="text" ng-model="lname" name="lname" id="lname" placeholder="Last name">
+                  <input type="text" ng-model="contact" name="contact" id="contact" placeholder="Contact">
+              </div>
+
+              <hr>
+
+              <div class="text-center">
+                  <button class="btn btn-success" onclick="addHtmlTableRow();">Add</button>
+                  <button class="btn btn-danger" onclick="removeSelectedRow();">Remove</button>
+              </div>
+              
+      </p>
+    
+      <div class="card" style="padding: 16px;">
+        <h4>Name: {{fname}}</h4>
+        <h4>Last: {{lname}}</h4>
+        <h4>Contact: {{contact}}</h4>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  </div>
+  </div>
+  <script>
+    var rIndex,
+      table = document.getElementById("table");
+
+    // check the empty input
+    function checkEmptyInput() {
+      var isEmpty = false,
+        fname = document.getElementById("fname").value,
+        contact = document.getElementById("contact").value,  // from lname to contact
+        lname = document.getElementById("lname").value;
+
+      if (fname === "") {
+        alert("First Name Connot Be Empty");
+        isEmpty = true;
+      }
+      else if (lname === "") {
+        alert("Age Connot Be Empty");
+        isEmpty = true;
+      }
+      else if (contact === "") {
+        alert("Last Name Connot Be Empty");
+        isEmpty = true;
+      }
+      return isEmpty;
+    }
+
+    // add Row
+    function addHtmlTableRow() {
+      // get the table by id
+      // create a new row and cells
+      // get value from input text
+      // set the values into row cell's
+      if (!checkEmptyInput()) {
+        var newRow = table.insertRow(1),
+          cell1 = newRow.insertCell(0),
+          cell2 = newRow.insertCell(1),
+          cell3 = newRow.insertCell(2),
+          fname = document.getElementById("fname").value,
+          lname = document.getElementById("lname").value;
+        contact = document.getElementById("contact").value, //Use of id
+
+          cell1.innerHTML = fname;
+        cell2.innerHTML = lname;
+        cell3.innerHTML = contact;
+        // call the function to set the event to the new row
+        selectedRowToInput();
+      }
+    }
+
+    // display selected row data into input text
+    function selectedRowToInput() {
+
+      for (var i = 1; i < table.rows.length; i++) {
+        table.rows[i].onclick = function () {
+          // get the seected row index
+          rIndex = this.rowIndex;
+          document.getElementById("fname").value = this.cells[0].innerHTML;
+          document.getElementById("lname").value = this.cells[1].innerHTML;
+          document.getElementById("contact").value = this.cells[2].innerHTML;
+        };
+      }
+    }
+    selectedRowToInput();
+    function removeSelectedRow() {
+      table.deleteRow(rIndex);
+      // clear input text
+      document.getElementById("fname").value = "";
+      document.getElementById("lname").value = "";
+      document.getElementById("contact").value = "";
+    }
+  </script>
+</body>
+
+</html>
